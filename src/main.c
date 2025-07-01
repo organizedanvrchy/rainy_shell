@@ -122,7 +122,7 @@ char *rsh_read_line(void) {
   int bufsize = RSH_RL_BUFSIZE;
   int position = 0;
   char *buffer = malloc(sizeof(char) * bufsize);
-  int char;
+  int c;
 
   if(!buffer) {
     fprintf(stderr, "rsh: allocation error\n");
@@ -131,14 +131,14 @@ char *rsh_read_line(void) {
 
   while(1) {
     // Read character
-    char = getchar();
+    c = getchar();
 
     // If at EOF, replaces with null char and return.
-    if(char == EOF || char == '\n') {
+    if(c == EOF || c == '\n') {
       buffer[position] = '\0';
       return buffer;
     } else {
-      buffer[position] = char;
+      buffer[position] = c;
     }
     position++;
 
