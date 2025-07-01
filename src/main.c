@@ -1,6 +1,23 @@
 // main.c
 
-// Reading Line
+// Reading Line with getline() function
+char *rsh_read_line(void) {
+  char *line = NULL;
+  ssize_t bufsize = 0; // getline allocates buffer instead
+
+  if(getline(&line, &bufsize, stdin) == -1) {
+    if(feof(stdin)) {
+      exit(EXIT_SUCCESS); // EOF received
+    } else {
+      perror("readline");
+      exit(EXIT_FAILURE);
+    }
+  }
+  return line;
+}
+
+// Reading Line without getline() function
+/*
 #define RSH_RL_BUFSIZE 1024
 char *rsh_read_line(void) {
   int bufsize = RSH_RL_BUFSIZE;
@@ -37,6 +54,7 @@ char *rsh_read_line(void) {
     }
   }
 }
+*/
 
 // Basic shell loop 
 void rsh_loop(void) {
