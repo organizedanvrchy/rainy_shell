@@ -1,4 +1,9 @@
 // main.c
+#include <sys/wait.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 // Built-in shell commands - forward declarations
 int rsh_cd(char **args);
