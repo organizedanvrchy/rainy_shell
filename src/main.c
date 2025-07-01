@@ -56,6 +56,39 @@ char *rsh_read_line(void) {
 }
 */
 
+// Parsing Line
+#define RSH_TOK_BUFSIZE 64
+#define RSH_TOK_DELIM " \t\r\n\a"
+char **rsh_spit_line(char *line) {
+  int bufsize = RSH_TOK_BUFSIZE; 
+  int position = 0;
+  char **tokens = malloc(sizeof(char*) * bufsize);
+  char *token;
+
+  if(!tokens) {
+    fprintf(stderr, "rsh: allocation error");
+    exit(EXIT_FAILURE);
+  }
+
+  token = strtok(line, RSH_TOK_DELIM);  // Tokenizing
+  while(token != NULL) {
+    tokens[position] = token;
+    position++;
+
+    if(position >= bufsize) {
+      bufsize += RSH_TOK_BUFSIZE;
+      tokens = realloc(tokens, bufsize * sizeof(char*));
+      if(!tokens) {
+        fprintf(stderr, "rsh: allocation error");
+        exit(EXIT_FAILURE);
+      }
+    }
+    token = strtok(NULL, RSH_TOK_DELIM);
+  }
+  tokens[position] = NULL; // NULL terminated array of pointers
+  return tokens;
+}
+
 // Basic shell loop 
 void rsh_loop(void) {
   char *line;
