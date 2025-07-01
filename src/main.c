@@ -102,7 +102,7 @@ int rsh_execute(char **args) {
 // Reading Line with getline() function
 char *rsh_read_line(void) {
   char *line = NULL;
-  ssize_t bufsize = 0; // getline allocates buffer instead
+  size_t bufsize = 0; // getline allocates buffer instead
 
   if(getline(&line, &bufsize, stdin) == -1) {
     if(feof(stdin)) {
